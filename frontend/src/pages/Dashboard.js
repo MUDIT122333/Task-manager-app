@@ -17,62 +17,6 @@ const Dashboard = ({ user, onLogout }) => {
   const [showCreateTask, setShowCreateTask] = useState(false);
   const [showCreateProject, setShowCreateProject] = useState(false);
 
-  const getAuthHeaders = () => ({
-    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-    'Content-Type': 'application/json'
-  });
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchUsers = async () => {
-  try {
-    const res = await fetch('http://127.0.0.1:5000/api/users', {
-      headers: {
-          'Authorization': `Bearer ${localStorage.getItem("token")}`
-        }
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        setUsers(data.users); // ✅ real users from DB
-      } else {
-        console.error(data.error);
-      }
-    } catch (err) {
-      console.error('Failed to fetch users:', err);
-    }
-  };
-
-  const fetchData = async () => {
-    try {
-      const [tasksRes, projectsRes] = await Promise.all([
-        fetch('http://localhost:5000/api/tasks', { headers: getAuthHeaders() }),
-        fetch('http://localhost:5000/api/projects', { headers: getAuthHeaders() })
-      ]);
-
-      const tasksData = await tasksRes.json();
-      const projectsData = await projectsRes.json();
-
-      if (tasksRes.ok) {
-        setTasks(tasksData.tasks);
-        calculateStats(tasksData.tasks);
-      }
-
-      if (projectsRes.ok) {
-        setProjects(projectsData.projects);
-      }
-
-      await fetchUsers();
-    } catch (err) {
-      console.error('Failed to fetch data:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const calculateStats = (taskList) => {
     const now = new Date();
     const stats = {
@@ -86,14 +30,60 @@ const Dashboard = ({ user, onLogout }) => {
     setStats(stats);
   };
 
-  const getStatusClass = (status) => {
-    switch (status) {
-      case 'TODO': return 'status-todo';
-      case 'IN PROGRESS': return 'status-progress';
-      case 'DONE': return 'status-done';
-      default: return '';
-    }
-  };
+  useEffect(() => {
+    const authHeaders = () => ({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      'Content-Type': 'application/json'
+    });
+
+    const fetchUsersInit = async () => {
+      try {
+        const res = await fetch('http://127.0.0.1:5000/api/users', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem("token")}`
+          }
+        });
+        const data = await res.json();
+        if (res.ok) {
+          setUsers(data.users);
+        } else {
+          console.error(data.error);
+        }
+      } catch (err) {
+        console.error('Failed to fetch users:', err);
+      }
+    };
+
+    const fetchData = async () => {
+      try {
+        const [tasksRes, projectsRes] = await Promise.all([
+          fetch('http://localhost:5000/api/tasks', { headers: authHeaders() }),
+          fetch('http://localhost:5000/api/projects', { headers: authHeaders() })
+        ]);
+
+        const tasksData = await tasksRes.json();
+        const projectsData = await projectsRes.json();
+
+        if (tasksRes.ok) {
+          setTasks(tasksData.tasks);
+          calculateStats(tasksData.tasks);
+        }
+
+        if (projectsRes.ok) {
+          setProjects(projectsData.projects);
+        }
+
+        await fetchUsersInit();
+      } catch (err) {
+        console.error('Failed to fetch data:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getPriorityClass = (priority) => {
     switch (priority) {

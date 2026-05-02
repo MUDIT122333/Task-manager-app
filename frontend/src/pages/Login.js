@@ -76,7 +76,10 @@ const Login = ({ onLogin, onSwitchToSignup }) => {
           </button>
         </form>
         <div className="auth-switch">
-          Don't have an account? <a href="#" onClick={(e) => { e.preventDefault(); onSwitchToSignup(); }}>Sign up</a>
+          Don't have an account?{' '}
+          <button type="button" onClick={onSwitchToSignup}>
+            Sign up
+          </button>
         </div>
       </div>
     </div>
