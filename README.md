@@ -285,5 +285,5 @@ identity=str(user.id)
 
 ## 🚀 Final URLs
 
-* Backend → https://your-backend.onrender.com
-* Frontend → https://your-app.vercel.app
+* Backend → https://task-manager-backend-l0h5.onrender.com
+* Frontend → https://task-manager-app-pu88.vercel.app/
