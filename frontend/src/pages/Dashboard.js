@@ -27,17 +27,15 @@ const Dashboard = ({ user, onLogout }) => {
   }, []);
 
   const fetchUsers = async () => {
-  try {
-    const res = await fetch('https://task-manager-backend-l0h5.onrender.com/api/auth/signup', {
-      headers: {
-          'Authorization': `Bearer ${localStorage.getItem("token")}`
-        }
+    try {
+      const res = await fetch('http://localhost:5000/api/users', {
+        headers: getAuthHeaders()
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        setUsers(data.users); // ✅ real users from DB
+        setUsers(data.users);
       } else {
         console.error(data.error);
       }

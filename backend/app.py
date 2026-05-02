@@ -5,6 +5,7 @@ from flask_cors import CORS
 from datetime import timedelta
 
 #  Import resources
+from api.health import HealthResource
 from api.users import UsersResource
 from api.auth import SignupResource, LoginResource
 from api.projects import ProjectResource, ProjectsResource
@@ -16,31 +17,31 @@ from models import User, Project, Task
 app = Flask(__name__)
 
 # Config
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['JWT_SECRET_KEY'] = 'your-secret-key-change-this-in-production'
-app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=24)
-
 # Init extensions
-db.init_app(app)
 jwt.init_app(app)
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app)
 
 api = Api(app)
 
-# Create tables
-with app.app_context():
-    db.create_all()
+# Import models and routes after app initialization
+from models import User, Project, Task
+from api.auth import SignupResource, LoginResource
+from api.projects import ProjectResource, ProjectsResource
+from api.tasks import TaskResource, TasksResource
+from api.users import UsersResource
 
-# Register routes
-api.add_resource(UsersResource, '/api/users')
+# API Routes
 api.add_resource(SignupResource, '/api/auth/signup')
 api.add_resource(LoginResource, '/api/auth/login')
+api.add_resource(UsersResource, '/api/users')
 api.add_resource(ProjectResource, '/api/projects/<int:project_id>')
 api.add_resource(ProjectsResource, '/api/projects')
 api.add_resource(TaskResource, '/api/tasks/<int:task_id>')
 api.add_resource(TasksResource, '/api/tasks')
+api.add_resource(HealthResource, '/health')
 
 if __name__ == '__main__':
     import os
+    with app.app_context():
+        db.create_all()
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
