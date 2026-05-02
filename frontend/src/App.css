@@ -124,6 +124,21 @@ body {
   background-color: #2f855a;
 }
 
+.btn-link {
+  background: none;
+  border: none;
+  color: #667eea;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+  font-weight: 500;
+}
+
+.btn-link:hover {
+  color: #5a67d8;
+}
+
 .auth-switch {
   text-align: center;
   margin-top: 1rem;

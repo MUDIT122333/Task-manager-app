@@ -49,8 +49,8 @@ const Dashboard = ({ user, onLogout }) => {
   const fetchData = async () => {
     try {
       const [tasksRes, projectsRes] = await Promise.all([
-        fetch('http://localhost:5000/api/tasks', { headers: getAuthHeaders() }),
-        fetch('http://localhost:5000/api/projects', { headers: getAuthHeaders() })
+        fetch('https://task-manager-backend-l0h5.onrender.com/api/tasks', { headers: getAuthHeaders() }),
+        fetch('https://task-manager-backend-l0h5.onrender.com/api/projects', { headers: getAuthHeaders() })
       ]);
 
       const tasksData = await tasksRes.json();
@@ -86,15 +86,7 @@ const Dashboard = ({ user, onLogout }) => {
     setStats(stats);
   };
 
-  const getStatusClass = (status) => {
-    switch (status) {
-      case 'TODO': return 'status-todo';
-      case 'IN PROGRESS': return 'status-progress';
-      case 'DONE': return 'status-done';
-      default: return '';
-    }
-  };
-
+  
   const getPriorityClass = (priority) => {
     switch (priority) {
       case 'HIGH': return 'priority-high';
