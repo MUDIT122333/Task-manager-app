@@ -12,7 +12,7 @@ const TaskStatusUpdate = ({ task, onStatusUpdate }) => {
     setLoading(true);
     
     try {
-      const response = await fetch(`http://localhost:5000/api/tasks/${task.id}`, {
+      const response = await fetch(`https://task-manager-backend-l0h5.onrender.com/api/tasks/${task.id}`, {
         method: 'PUT',
         headers: getAuthHeaders(),
         body: JSON.stringify({ status: newStatus })

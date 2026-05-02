@@ -21,7 +21,7 @@ const Login = ({ onLogin, onSwitchToSignup }) => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch('https://task-manager-backend-l0h5.onrender.com/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

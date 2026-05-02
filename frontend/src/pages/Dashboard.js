@@ -28,7 +28,7 @@ const Dashboard = ({ user, onLogout }) => {
 
   const fetchUsers = async () => {
   try {
-    const res = await fetch('http://127.0.0.1:5000/api/users', {
+    const res = await fetch('https://task-manager-backend-l0h5.onrender.com/api/auth/signup', {
       headers: {
           'Authorization': `Bearer ${localStorage.getItem("token")}`
         }

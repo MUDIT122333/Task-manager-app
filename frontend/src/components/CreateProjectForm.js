@@ -26,7 +26,7 @@ const CreateProjectForm = ({ onClose, onProjectCreated }) => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:5000/api/projects', {
+      const response = await fetch('https://task-manager-backend-l0h5.onrender.com/api/projects', {
         method: 'POST',
         headers: getAuthHeaders(),
         body: JSON.stringify(formData)
