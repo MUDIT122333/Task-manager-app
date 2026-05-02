@@ -9,6 +9,7 @@ Project creation & management
 Task assignment & tracking
 Dashboard with stats
 Responsive UI
+
 🧰 Tech Stack
 Backend: Flask, Flask-RESTful, Flask-JWT-Extended
 Database: SQLite (Render persistent disk recommended ⚠️)
@@ -16,6 +17,7 @@ Frontend: React
 Deployment:
 Backend → Render
 Frontend → Vercel
+
 📁 Project Structure
 team-task-manager/
 ├── backend/
