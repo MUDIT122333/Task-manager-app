@@ -30,6 +30,7 @@ from api.projects import ProjectResource, ProjectsResource
 from api.tasks import TaskResource, TasksResource
 from api.users import UsersResource
 
+
 # API Routes
 api.add_resource(SignupResource, '/api/auth/signup')
 api.add_resource(LoginResource, '/api/auth/login')
@@ -40,8 +41,10 @@ api.add_resource(TaskResource, '/api/tasks/<int:task_id>')
 api.add_resource(TasksResource, '/api/tasks')
 api.add_resource(HealthResource, '/health')
 
+with app.app_context():
+    db.create_all()
+
+    
 if __name__ == '__main__':
     import os
-    with app.app_context():
-        db.create_all()
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
