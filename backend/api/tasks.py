@@ -107,7 +107,7 @@ class TaskResource(Resource):
         except Exception as e:
             return {'error': 'Failed to fetch task'}, 500
     
-   @jwt_required()
+    @jwt_required()
     def put(self, task_id):
         try:
             user_id = int(get_jwt_identity())   # ✅ FIXED
