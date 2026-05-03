@@ -107,10 +107,10 @@ class TaskResource(Resource):
         except Exception as e:
             return {'error': 'Failed to fetch task'}, 500
     
-    @jwt_required()
+   @jwt_required()
     def put(self, task_id):
         try:
-            user_id = get_jwt_identity()
+            user_id = int(get_jwt_identity())   # ✅ FIXED
             user = User.query.get(user_id)
             task = Task.query.get_or_404(task_id)
             
@@ -139,7 +139,9 @@ class TaskResource(Resource):
             
             if data.get('deadline'):
                 try:
-                    task.deadline = datetime.fromisoformat(data['deadline'].replace('Z', '+00:00'))
+                    task.deadline = datetime.fromisoformat(
+                        data['deadline'].replace('Z', '+00:00')
+                    )
                 except:
                     return {'error': 'Invalid deadline format. Use ISO format.'}, 400
             
@@ -153,7 +155,8 @@ class TaskResource(Resource):
             
         except Exception as e:
             db.session.rollback()
-            return {'error': 'Failed to update task'}, 500
+            print("TASK UPDATE ERROR:", e)  # 🔥 add this for debugging
+            return {'error': 'Failed to update task'}, 500    
     
     @jwt_required()
     def delete(self, task_id):
