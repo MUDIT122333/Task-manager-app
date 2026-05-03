@@ -8,7 +8,7 @@ class TasksResource(Resource):
     @jwt_required()
     def get(self):
         try:
-            user_id = get_jwt_identity()
+            user_id = int(get_jwt_identity())
             user = User.query.get(user_id)
             
             # Get query parameters
