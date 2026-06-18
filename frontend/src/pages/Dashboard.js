@@ -22,9 +22,7 @@ const Dashboard = ({ user, onLogout }) => {
     'Content-Type': 'application/json'
   });
 
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+
 
   const fetchUsers = useCallback(async () => {
     try {
@@ -70,6 +68,10 @@ const Dashboard = ({ user, onLogout }) => {
       setLoading(false);
     }
   }, [fetchUsers]);
+  
+    useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const calculateStats = (taskList) => {
     const now = new Date();
