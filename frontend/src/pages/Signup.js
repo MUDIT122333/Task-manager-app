@@ -37,7 +37,15 @@ const Signup = ({ onSignup, onSwitchToLogin }) => {
       const data = await response.json();
 
       if (response.ok) {
-        onSignup(data.user, data.access_token);
+        alert("Registration Successful, Now login! ")
+        setFormData({
+          username:"",
+          password:"",
+          role:"member"
+        })
+        onSwitchToLogin();
+        // onSignup(data.user, data.access_token);
+      
       } else {
         setError(data.error || 'Signup failed');
       }
