@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import CreateTaskForm from '../components/CreateTaskForm';
 import CreateProjectForm from '../components/CreateProjectForm';
 import TaskStatusUpdate from '../components/TaskStatusUpdate';
@@ -26,7 +26,7 @@ const Dashboard = ({ user, onLogout }) => {
     fetchData();
   }, []);
 
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       const res = await fetch('https://task-manager-backend-l0h5.onrender.com/api/users', {
         headers: getAuthHeaders()
@@ -42,9 +42,9 @@ const Dashboard = ({ user, onLogout }) => {
     } catch (err) {
       console.error('Failed to fetch users:', err);
     }
-  };
+  }, [])
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const [tasksRes, projectsRes] = await Promise.all([
         fetch('https://task-manager-backend-l0h5.onrender.com/api/tasks', { headers: getAuthHeaders() }),
@@ -69,7 +69,7 @@ const Dashboard = ({ user, onLogout }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   const calculateStats = (taskList) => {
     const now = new Date();
