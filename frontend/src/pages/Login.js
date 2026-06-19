@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const Login = ({ onLogin, onSwitchToSignup }) => {
   const [formData, setFormData] = useState({
-    username: '',
+    identifier: '',
     password: ''
   });
   const [loading, setLoading] = useState(false);
@@ -49,13 +49,14 @@ const Login = ({ onLogin, onSwitchToSignup }) => {
         <h2 className="auth-title">Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label className="form-label">Username</label>
+            <label className="form-label">Username or Email</label>
             <input
               type="text"
-              name="username"
+              name="identifier"
               className="form-input"
-              value={formData.username}
+              value={formData.identifier}
               onChange={handleChange}
+              placeholder="enter username or email"
               required
             />
           </div>
@@ -67,6 +68,7 @@ const Login = ({ onLogin, onSwitchToSignup }) => {
               className="form-input"
               value={formData.password}
               onChange={handleChange}
+              placeholder="password"
               required
             />
           </div>

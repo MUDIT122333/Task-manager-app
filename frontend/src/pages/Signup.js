@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 const Signup = ({ onSignup, onSwitchToLogin }) => {
   const [formData, setFormData] = useState({
     username: '',
+    email:'',
     password: '',
-    role: 'member'
+    // role: 'member'
   });
 
   const [loading, setLoading] = useState(false);
@@ -40,8 +41,9 @@ const Signup = ({ onSignup, onSwitchToLogin }) => {
         alert("Registration Successful, Now login! ")
         setFormData({
           username:"",
+          email:'',
           password:"",
-          role:"member"
+          // role:"member"
         })
         onSwitchToLogin();
         // onSignup(data.user, data.access_token);
@@ -73,6 +75,20 @@ const Signup = ({ onSignup, onSwitchToLogin }) => {
               className="form-input"
               value={formData.username}
               onChange={handleChange}
+              placeholder="enter username"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Email</label>
+            <input
+              type="text"
+              name="email"
+              className="form-input"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="enter email"
               required
             />
           </div>
@@ -85,11 +101,12 @@ const Signup = ({ onSignup, onSwitchToLogin }) => {
               className="form-input"
               value={formData.password}
               onChange={handleChange}
+              placeholder="password"
               required
             />
           </div>
 
-          <div className="form-group">
+          {/* <div className="form-group">
             <label className="form-label">Role</label>
             <select
               name="role"
@@ -100,7 +117,7 @@ const Signup = ({ onSignup, onSwitchToLogin }) => {
               <option value="member">Member</option>
               <option value="admin">Admin</option>
             </select>
-          </div>
+          </div> */}
 
           {error && <div className="error-message">{error}</div>}
 
