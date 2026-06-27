@@ -15,16 +15,20 @@ from api.tasks import TaskResource, TasksResource
 from models import User, Project, Task
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///taskmanager.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Config
-# Init extensions
+app.config['JWT_SECRET_KEY'] = 'your-secret-key'
+
+db.init_app(app)
 jwt.init_app(app)
+
+
 CORS(app)
 
 api = Api(app)
 
 # Import models and routes after app initialization
-from models import User, Project, Task
 from api.auth import SignupResource, LoginResource
 from api.projects import ProjectResource, ProjectsResource
 from api.tasks import TaskResource, TasksResource
@@ -44,6 +48,9 @@ api.add_resource(HealthResource, '/health')
 with app.app_context():
     db.create_all()
 
+@app.route('/')
+def home():
+    return {'message ': "task manager api is running."}
     
 if __name__ == '__main__':
     import os
