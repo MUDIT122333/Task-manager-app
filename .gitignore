@@ -5,7 +5,9 @@
 .env.production
 .env.development
 
-
+backend/venv/
+backend/__pycache__/
+backend/instance/
 __pycache__/
 *.pyc
 instance/
