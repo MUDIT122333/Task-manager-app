@@ -81,11 +81,16 @@ from models import User, Project, Task
 app = Flask(__name__)
 
 # Database — reads from .env file
+# Tells SQLAlchemy WHICH database to connect to
+# Value comes from .env — now points to Supabase PostgreSQL
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+
+# Just turns off a noisy warning — nothing to do with DB type
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# JWT secret key for token signing — nothing to do with database at all
 app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY', 'your-secret-key')
 
-print("DATABASE_URL =", app.config["SQLALCHEMY_DATABASE_URI"])
 
 db.init_app(app)
 jwt.init_app(app)
