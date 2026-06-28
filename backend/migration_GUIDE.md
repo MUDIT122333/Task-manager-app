@@ -135,6 +135,11 @@ venv\Scripts\activate
 
 # Run app
 python app.py
+
+# use this command if powershell or vscode terminal shows that "psql is not found " then you have to add the path explicitly
+$env:PATH += ";C:\Program Files\PostgreSQL\18\bin"
+
+# query the db as per the requirement and write sql command to query
 ```
 
 ---
