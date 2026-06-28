@@ -66,6 +66,20 @@ class LoginResource(Resource):
             
             # Create access token
             access_token = create_access_token(identity=str(user.id))
+
+            print("Received:", data)
+
+            identifier = data.get("identifier")
+            print("Identifier:", identifier)
+
+            user = User.query.filter(
+                or_(User.username == identifier, User.email == identifier)
+            ).first()
+
+            print("User:", user)
+
+            if user:
+                print("Password Match:", user.check_password(data["password"]))
             
             return {
                 'message': 'Login successful',
